@@ -2,7 +2,7 @@ import { Image, StyleSheet, View } from 'react-native';
 import React, { FC, useMemo } from 'react';
 import { imageData } from '@utils/dummyData';
 import AutoScroll from '@homielab/react-native-auto-scroll';
-import { screenHeight, screenWidth } from '@utils/Scaling';
+import { screenWidth } from '@utils/Scaling';
 
 const ProductSlider = () => {
   const rows = useMemo(() => {
@@ -36,7 +36,7 @@ const Row: FC<{ row: typeof imageData; rowIndex: number }> = ({
   return (
     <View style={styles.row}>
       {row?.map((image, imageIndex) => {
-        const horizontalIndex = rowIndex % 2 == 0 ? -20 : 20;
+        const horizontalIndex = rowIndex % 2 == 0 ? -18 : 18;
         return (
           <View
             key={imageIndex}
@@ -78,9 +78,9 @@ const styles = StyleSheet.create({
   itemContainer: {
     marginBottom: 12,
     marginHorizontal: 10,
-    width: screenWidth * 0.26,
-    height: screenWidth * 0.26,
-    backgroundColor: '#f5f5f5',
+    width: screenWidth * 0.25,
+    height: screenWidth * 0.25,
+    backgroundColor: '#f0f8ff',
     justifyContent: 'center',
     borderRadius: 25,
     alignItems: 'center',
