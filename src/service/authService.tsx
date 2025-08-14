@@ -8,6 +8,7 @@ import { appAxios } from './apiInterceptors';
 export const customerLogin = async (phone: string) => {
   try {
     const response = await axios.post(`${BASE_URL}/customer/login`, { phone });
+   
     const { accessToken, refreshToken, customer } = response.data;
     tokenStorage.set('accessToken', accessToken);
     tokenStorage.set('refreshToken', refreshToken);
@@ -23,6 +24,7 @@ export const deliveryLogin = async (email: string, password: string) => {
       email,
       password,
     });
+ 
     const { accessToken, refreshToken, deliveryPartner } = response.data;
     tokenStorage.set('accessToken', accessToken);
     tokenStorage.set('refreshToken', refreshToken);

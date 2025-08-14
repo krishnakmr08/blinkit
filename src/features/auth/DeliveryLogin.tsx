@@ -21,8 +21,7 @@ const DeliveryLogin: FC = () => {
     console.log(email, password);
     setLoading(true);
     try {
-     const response =  await deliveryLogin(email, password);
-     console.log(response)
+      await deliveryLogin(email, password);
       resetAndNavigate('DeliveryDashboard');
     } catch (error) {
       Alert.alert('Login Failed');
