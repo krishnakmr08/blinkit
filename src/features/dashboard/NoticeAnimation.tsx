@@ -8,6 +8,7 @@ const NoticeAnimation: FC<{
   noticePosition: any;
   children: React.ReactElement;
 }> = ({ noticePosition, children }) => {
+  
   return (
     <View style={styles.container}>
       <Animated.View

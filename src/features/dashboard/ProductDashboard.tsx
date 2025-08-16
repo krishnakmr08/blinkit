@@ -3,8 +3,8 @@ import {
   Text,
   StyleSheet,
   Platform,
+  Animated as RNAnimated,
   useAnimatedValue,
-  Animated,
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
@@ -23,19 +23,24 @@ import { useAuthStore } from '@state/authStore';
 import NoticeAnimation from './NoticeAnimation';
 import Visuals from '@features/dashboard/Visuals';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import Animated, {
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 import { RFValue } from 'react-native-responsive-fontsize';
 import CustomText from '@components/ui/CustomText';
 import { Fonts } from '@utils/Constants';
 import AnimatedHeader from './AnimatedHeader';
 import Content from '@components/dashboard/Content';
 import StickySearchBar from './StickySearchBar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const NOTICE_HEIGHT = -(NoticeHeight + 12);
 const ProductDashboard = () => {
   const noticePosition = useRef(useAnimatedValue(NOTICE_HEIGHT)).current;
   const { user, setUser } = useAuthStore();
 
+   const insets = useSafeAreaInsets()
   const { scrollY, expand } = useCollapsibleContext();
   const previousScroll = useRef<number>(0);
 
@@ -51,7 +56,7 @@ const ProductDashboard = () => {
     };
   });
   const slideUp = () => {
-    Animated.timing(noticePosition, {
+    RNAnimated.timing(noticePosition, {
       toValue: NOTICE_HEIGHT,
       duration: 1200,
       useNativeDriver: false,
@@ -59,7 +64,7 @@ const ProductDashboard = () => {
   };
 
   const slideDown = () => {
-    Animated.timing(noticePosition, {
+    RNAnimated.timing(noticePosition, {
       toValue: 0,
       duration: 1200,
       useNativeDriver: false,
@@ -67,23 +72,11 @@ const ProductDashboard = () => {
   };
 
   useEffect(() => {
-    const updateUser = () => {
-      Geolocation.getCurrentPosition(
-        position => {
-          console.log(position);
-          const { latitude, longitude } = position.coords;
-
-          reverseGeocode(latitude, longitude, setUser);
-        },
-        error => console.log(error),
-        {
-          enableHighAccuracy: false,
-          timeout: 15000,
-        },
-      );
-    };
-
-    updateUser();
+    slideDown();
+    const timeoutId = setTimeout(() => {
+      slideUp();
+    }, 3500);
+    return () => clearTimeout(timeoutId);
   }, []);
   return (
     <NoticeAnimation noticePosition={noticePosition}>
@@ -91,7 +84,7 @@ const ProductDashboard = () => {
         <Visuals />
         <SafeAreaView />
 
-        {/* <Animated.View style={[styles.backToTopbutton, backToTopStyle]}>
+        <Animated.View style={[styles.backToTopbutton, backToTopStyle]}>
           <TouchableOpacity
             onPress={() => {
               scrollY.value = 0;
@@ -112,9 +105,8 @@ const ProductDashboard = () => {
               Back to top
             </CustomText>
           </TouchableOpacity>
-        </Animated.View> */}
-
-        <CollapsibleContainer style={styles.panelConatainer}>
+        </Animated.View>
+        <CollapsibleContainer style={[styles.panelConatainer,{marginTop : insets.top || 20}]}>
           <CollapsibleHeaderContainer containerStyle={styles.transparent}>
             <AnimatedHeader
               showNotice={() => {

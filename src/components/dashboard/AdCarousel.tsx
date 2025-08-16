@@ -14,7 +14,7 @@ const AdCarousel: FC<{ adData: any }> = ({ adData }) => {
       <Carousel
         {...baseOptions}
         loop
-        autoPlay={true}
+        autoPlay 
         pagingEnabled
         snapEnabled
         autoPlayInterval={2500}
