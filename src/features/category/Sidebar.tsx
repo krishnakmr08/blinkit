@@ -82,7 +82,7 @@ const Sidebar: FC<SidebarProps> = ({
                 <View
                   style={[
                     styles.imageContainer,
-                    selectedCategory.id === category?.id &&
+                    selectedCategory.id === category?._id &&
                       styles.selectedImageContainer,
                   ]}
                 >
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     width: '75%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F3F4F7',
+    backgroundColor: '#F0F8FF',
     overflow: 'hidden',
   },
   selectedImageContainer: {

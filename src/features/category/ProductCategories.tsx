@@ -3,15 +3,20 @@ import React, { useEffect, useState } from 'react';
 import CustomHeader from '@components/ui/CustomHeader';
 import { Colors } from '@utils/Constants';
 import Sidebar from '@features/category/Sidebar';
-import { getAllCategories } from '@service/productService';
+import {
+  getAllCategories,
+  getProductsByCategoryId,
+} from '@service/productService';
+import ProductList from './ProductList';
+import {productsList} from "@utils/dummyData"
 
 const ProductCategories = () => {
   const [categories, setCategories] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<any>(null);
   const [products, setProducts] = useState<any[]>([]);
   const [categoriesLoading, setCategoriesLoading] = useState<boolean>(true);
-  const [productsLoading, setProductsLoading] = useState<boolean>(true);
-
+  const [productsLoading, setProductsLoading] = useState<boolean>(false);
+    console.log(products)
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -29,10 +34,29 @@ const ProductCategories = () => {
     };
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    const fetchProducts = async (categoryId: string) => {
+      try {
+        setProductsLoading(true);
+        const data = await getProductsByCategoryId(categoryId);
+        console.log(data,'array')
+        setProducts(data);
+      } catch (error) {
+        console.log('Error Fetching Products', error);
+      } finally {
+        setProductsLoading(false);
+      }
+    };
+
+    if (selectedCategory?._id) {
+      fetchProducts(selectedCategory?._id);
+    }
+  }, [selectedCategory]);
   return (
     <View style={styles.mainContainer}>
       <CustomHeader title={selectedCategory?.name || 'Categories'} search />
-      <View>
+      <View style={styles.subContainer}>
         {categoriesLoading ? (
           <ActivityIndicator size="small" color={Colors.border} />
         ) : (
@@ -41,6 +65,16 @@ const ProductCategories = () => {
             selectedCategory={selectedCategory}
             onCategoryPress={(category: any) => setSelectedCategory(category)}
           />
+        )}
+
+        {productsLoading ? (
+          <ActivityIndicator
+            size="large"
+            color={Colors.border}
+            style={styles.center}
+          />
+        ) : (
+          <ProductList data={products || []} />
         )}
       </View>
     </View>
