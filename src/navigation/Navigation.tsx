@@ -1,4 +1,3 @@
-
 import React, { FC } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,19 +8,29 @@ import DeliveryLogin from '@features/auth/DeliveryLogin';
 import ProductDashboard from '@features/dashboard/ProductDashboard';
 import DeliveryDashBoard from '@features/delivery/DeliveryDashBoard';
 import ProductCategories from '@features/category/ProductCategories';
+import ProductOrder from '@features/order/ProductOrder';
 
 const Stack = createNativeStackNavigator();
-const Navigation :FC = () => {
+const Navigation: FC = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="SplashScreen"  component={SplashScreen} />
-        <Stack.Screen name="ProductDashboard"  component={ProductDashboard} />
-        <Stack.Screen name="DeliveryDashboard"  component={DeliveryDashBoard} />
-        <Stack.Screen name="ProductCategories"  component={ProductCategories} />
+        <Stack.Screen name="SplashScreen" component={SplashScreen} />
+        <Stack.Screen name="ProductDashboard" component={ProductDashboard} />
+        <Stack.Screen name="DeliveryDashboard" component={DeliveryDashBoard} />
+        <Stack.Screen name="ProductCategories" component={ProductCategories} />
+        <Stack.Screen name="ProductOrder" component={ProductOrder} />
 
-        <Stack.Screen name="CustomerLogin" component={CustomerLogin}  options={{animation : 'fade'}} />
-        <Stack.Screen name="DeliveryLogin" component={DeliveryLogin} options={{animation : 'fade'}} />
+        <Stack.Screen
+          name="CustomerLogin"
+          component={CustomerLogin}
+          options={{ animation: 'fade' }}
+        />
+        <Stack.Screen
+          name="DeliveryLogin"
+          component={DeliveryLogin}
+          options={{ animation: 'fade' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -17,8 +17,6 @@ import {
   useCollapsibleContext,
   withCollapsibleContext,
 } from '@r0b0t3d/react-native-collapsible';
-import Geolocation from '@react-native-community/geolocation';
-import { reverseGeocode } from '@service/mapService';
 import { useAuthStore } from '@state/authStore';
 import NoticeAnimation from './NoticeAnimation';
 import Visuals from '@features/dashboard/Visuals';
@@ -34,6 +32,7 @@ import AnimatedHeader from './AnimatedHeader';
 import Content from '@components/dashboard/Content';
 import StickySearchBar from './StickySearchBar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import withCart from '@features/cart/withCart';
 
 const NOTICE_HEIGHT = -(NoticeHeight + 12);
 const ProductDashboard = () => {
@@ -173,4 +172,4 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
 });
-export default withCollapsibleContext(ProductDashboard);
+export default withCart(withCollapsibleContext(ProductDashboard))

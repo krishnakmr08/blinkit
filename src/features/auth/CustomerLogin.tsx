@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   },
   absoluteSwitch: {
     position: 'absolute',
-    top: Platform.OS === 'ios' ? 50 : 20,
+    top: Platform.OS === 'ios' ? 50 : 50,
     backgroundColor: '#fff',
     shadowColor: '#000',
     shadowOffset: { width: 1, height: 1 },

@@ -9,6 +9,7 @@ import {
 } from '@service/productService';
 import ProductList from './ProductList';
 import {productsList} from "@utils/dummyData"
+import withCart from '@features/cart/withCart';
 
 const ProductCategories = () => {
   const [categories, setCategories] = useState<any[]>([]);
@@ -98,4 +99,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductCategories;
+export default withCart(ProductCategories);
