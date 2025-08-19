@@ -1,5 +1,14 @@
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import {
+  Alert,
+  Image,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, { useState } from 'react';
 import CustomHeader from '@components/ui/CustomHeader';
 import { Colors, Fonts } from '@utils/Constants';
 import OrderList from './OrderList';
@@ -9,11 +18,46 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import BillDetails from './BillDetails';
 import { useAuthStore } from '@state/authStore';
 import { useCartStore } from '@state/cartStore';
+import { hocStyles } from '@styles/GlobalStyles';
+import ArrowButton from '@components/ui/ArrowButton';
+import { createOrder } from '@service/orderService';
+import { navigate } from '@utils/NavigationUtils';
 
 const ProductOrder = () => {
+  const [loading, setLoading] = useState(false);
   const { getTotalPrice, cart, clearCart } = useCartStore();
   const { user, setCurrentOrder, currentOrder } = useAuthStore();
   const totalItemPrice = getTotalPrice();
+
+  const handlePlaceOrder = async () => {
+    if (currentOrder !== null) {
+      Alert.alert('Let your first order to be delivered');
+      return;
+    }
+
+    const formattedData = cart.map(item => ({
+      id: item._id,
+      item: item._id,
+      count: item.count,
+    }));
+
+    if (formattedData.length == 0) {
+      Alert.alert('Add any items to place order');
+      return;
+    }
+
+    setLoading(true);
+    const data = await createOrder(formattedData, totalItemPrice);
+
+    if (data !== null) {
+      setCurrentOrder(data);
+      clearCart();
+      navigate('OrderSuccess', { ...data });
+    } else {
+      Alert.alert('There was an error ');
+    }
+    setLoading(false);
+  };
   return (
     <View style={styles.container}>
       <CustomHeader title="Checkout" />
@@ -35,14 +79,79 @@ const ProductOrder = () => {
         </View>
         <BillDetails totalItemPrice={totalItemPrice} />
 
-        <View style={styles.flexRow}>
-          <CustomText>
-            
-          </CustomText>
+        <View style={styles.flexRowBetween}>
+          <View>
+            <CustomText fontFamily={Fonts.SemiBold} variant="h7">
+              Cancellation policy
+            </CustomText>
+            <CustomText
+              fontFamily={Fonts.SemiBold}
+              variant="h8"
+              style={styles.cancelText}
+            >
+              Order cannot be cancelled once packed for delivery , In case of
+              unexpected delays. refund will be provided, if applicable
+            </CustomText>
+          </View>
         </View>
       </ScrollView>
 
-      
+      <View style={hocStyles.cartContainer}>
+        <View style={styles.absoluteContainer}>
+          <View style={styles.addressContainer}>
+            <View style={styles.flexRow}>
+              <Image
+                source={require('@assets/icons/home.png')}
+                style={{ height: 20, width: 20 }}
+              />
+              <View style={{ width: '75%' }}>
+                <CustomText variant="h8" fontFamily={Fonts.Medium}>
+                  Delivering to Home
+                </CustomText>
+                <CustomText
+                  variant="h8"
+                  numberOfLines={2}
+                  style={{ opacity: 0.6 }}
+                >
+                  {user?.address}
+                </CustomText>
+              </View>
+            </View>
+            <TouchableOpacity>
+              <CustomText
+                variant="h6"
+                style={{ color: Colors.secondary }}
+                fontFamily={Fonts.Medium}
+              >
+                Change
+              </CustomText>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.paymentGateway}>
+            <View style={{ width: '30%' }}>
+              <CustomText fontFamily={Fonts.Regular} fontSize={RFValue(6)}>
+                💵 PAY USING
+              </CustomText>
+              <CustomText
+                fontFamily={Fonts.Regular}
+                variant="h8"
+                style={{ marginTop: 2 }}
+              >
+                Cash on Delivery
+              </CustomText>
+            </View>
+            <View style={{ width: '70%' }}>
+              <ArrowButton
+                loading={loading}
+                price={totalItemPrice}
+                title="Place Order"
+                onPress={handlePlaceOrder}
+              />
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
@@ -71,5 +180,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     gap: 10,
+  },
+  cancelText: {
+    marginTop: 4,
+    opacity: 0.6,
+  },
+  paymentGateway: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 14,
+    paddingTop: 10,
+  },
+  addressContainer: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+    borderBottomWidth: 0.7,
+    borderColor: Colors.border,
+  },
+  absoluteContainer: {
+    marginVertical: 15,
+    marginBottom: Platform.OS === 'ios' ? 30 : 10,
   },
 });

@@ -9,6 +9,8 @@ import ProductDashboard from '@features/dashboard/ProductDashboard';
 import DeliveryDashBoard from '@features/delivery/DeliveryDashBoard';
 import ProductCategories from '@features/category/ProductCategories';
 import ProductOrder from '@features/order/ProductOrder';
+import OrderSuccess from '@features/order/OrderSuccess';
+import LiveTracking from '@features/map/LiveTracking';
 
 const Stack = createNativeStackNavigator();
 const Navigation: FC = () => {
@@ -19,6 +21,8 @@ const Navigation: FC = () => {
         <Stack.Screen name="ProductDashboard" component={ProductDashboard} />
         <Stack.Screen name="DeliveryDashboard" component={DeliveryDashBoard} />
         <Stack.Screen name="ProductCategories" component={ProductCategories} />
+        <Stack.Screen name="OrderSuccess" component={OrderSuccess} />
+        <Stack.Screen name="LiveTracking" component={LiveTracking} />
         <Stack.Screen name="ProductOrder" component={ProductOrder} />
 
         <Stack.Screen
