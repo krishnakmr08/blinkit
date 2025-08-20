@@ -33,6 +33,7 @@ import Content from '@components/dashboard/Content';
 import StickySearchBar from './StickySearchBar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import withCart from '@features/cart/withCart';
+import withLiveStatus from "@features/map/withLiveStatus"
 
 const NOTICE_HEIGHT = -(NoticeHeight + 12);
 const ProductDashboard = () => {
@@ -172,4 +173,4 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
 });
-export default withCart(withCollapsibleContext(ProductDashboard))
+export default withLiveStatus(withCart(withCollapsibleContext(ProductDashboard)))
