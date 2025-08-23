@@ -49,4 +49,4 @@ const ScalePress: FC<ScalePressProps> = ({ onPress, children, style }) => {
 
 export default ScalePress;
 
-const styles = StyleSheet.create({});
+

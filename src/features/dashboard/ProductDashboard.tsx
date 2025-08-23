@@ -33,14 +33,14 @@ import Content from '@components/dashboard/Content';
 import StickySearchBar from './StickySearchBar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import withCart from '@features/cart/withCart';
-import withLiveStatus from "@features/map/withLiveStatus"
+import withLiveStatus from '@features/map/withLiveStatus';
 
 const NOTICE_HEIGHT = -(NoticeHeight + 12);
 const ProductDashboard = () => {
   const noticePosition = useRef(useAnimatedValue(NOTICE_HEIGHT)).current;
   const { user, setUser } = useAuthStore();
 
-   const insets = useSafeAreaInsets()
+  const insets = useSafeAreaInsets();
   const { scrollY, expand } = useCollapsibleContext();
   const previousScroll = useRef<number>(0);
 
@@ -106,7 +106,9 @@ const ProductDashboard = () => {
             </CustomText>
           </TouchableOpacity>
         </Animated.View>
-        <CollapsibleContainer style={[styles.panelConatainer,{marginTop : insets.top || 20}]}>
+        <CollapsibleContainer
+          style={[styles.panelConatainer, { marginTop: insets.top || 20 }]}
+        >
           <CollapsibleHeaderContainer containerStyle={styles.transparent}>
             <AnimatedHeader
               showNotice={() => {
@@ -142,7 +144,7 @@ const ProductDashboard = () => {
                 fontFamily={Fonts.Bold}
                 style={{ marginTop: 10, paddingBottom: 100, opacity: 0.2 }}
               >
-                Developed By ❤️ Krishna Kumar
+                Developed By  Krishna Kumar
               </CustomText>
             </View>
           </CollapsibleScrollView>
@@ -173,4 +175,6 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
 });
-export default withLiveStatus(withCart(withCollapsibleContext(ProductDashboard)))
+export default withLiveStatus(
+  withCart(withCollapsibleContext(ProductDashboard)),
+);

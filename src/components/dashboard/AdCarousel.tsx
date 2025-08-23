@@ -10,11 +10,11 @@ const AdCarousel: FC<{ adData: any }> = ({ adData }) => {
     height: screenWidth * 0.5,
   };
   return (
-    <View style={{left : -20,marginVertical : 20}}>
+    <View style={{ left: -20, marginVertical: 20 }}>
       <Carousel
         {...baseOptions}
         loop
-        autoPlay 
+        autoPlay
         pagingEnabled
         snapEnabled
         autoPlayInterval={2500}

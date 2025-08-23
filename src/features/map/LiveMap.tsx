@@ -1,8 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { FC } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { FC, useEffect } from 'react';
 import { screenHeight } from '@utils/Scaling';
 import { Colors } from '@utils/Constants';
 import { useMapRefStore } from '@state/mapStore';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MapViewComponent from '@components/map/MapViewComponent';
+import { handleFitToPath } from '@components/map/mapUtils';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface LiveMapProps {
   deliveryPersonLocation: any;
@@ -20,9 +24,46 @@ const LiveMap: FC<LiveMapProps> = ({
   hasPickedUp,
 }) => {
   const { mapRef, setMapRef } = useMapRefStore();
+
+  useEffect(() => {
+    if (mapRef) {
+      handleFitToPath(
+        mapRef,
+        deliveryLocation,
+        deliveryPersonLocation,
+        hasPickedUp,
+        hasAccepted,
+        pickupLocation
+      );
+    }
+  });
   return (
     <View style={styles.container}>
-      <Text>LiveMap</Text>
+      <MapViewComponent
+        mapRef={mapRef}
+        setMapRef={setMapRef}
+        hasAccepted={hasAccepted}
+        deliveryLocation={deliveryLocation}
+        deliveryPersonLocation={deliveryPersonLocation}
+        pickupLocation={pickupLocation}
+        hasPickedUp={hasPickedUp}
+      />
+
+      <TouchableOpacity
+        style={styles.fitButton}
+        onPress={() => {
+          handleFitToPath(
+            mapRef,
+            deliveryLocation,
+            deliveryPersonLocation,
+            hasAccepted,
+            hasPickedUp,
+            pickupLocation,
+          );
+        }}
+      >
+        <Icon name="target" size={RFValue(14)} color={Colors.text} />
+      </TouchableOpacity>
     </View>
   );
 };

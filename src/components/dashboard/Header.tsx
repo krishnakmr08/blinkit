@@ -40,7 +40,7 @@ const Header: FC<{ showNotice: () => void }> = ({ showNotice }) => {
     <View style={styles.subContainer}>
       <TouchableOpacity activeOpacity={0.8}>
         <CustomText fontFamily={Fonts.Bold} variant="h6" style={styles.text}>
-          Delivery in
+          blinkit in
         </CustomText>
         <View style={styles.flexRowGap}>
           <CustomText
@@ -63,25 +63,25 @@ const Header: FC<{ showNotice: () => void }> = ({ showNotice }) => {
 
         <View style={styles.flexRow}>
           <CustomText
-            variant="h6"
+            variant="h8"
             numberOfLines={1}
             fontFamily={Fonts.Medium}
             style={styles.text2}
           >
             {user?.address || 'Knowhere,Somewhere 😌'}
           </CustomText>
-        
-        <Icon
-          name="menu-down"
-          color="#fff"
-          size={RFValue(20)}
-          style={{ bottom: -1 }}
-        />
+
+          <Icon
+            name="menu-down"
+            color="#fff"
+            size={RFValue(20)}
+            style={{ bottom: -1 }}
+          />
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigate('Profile')}>
-        <Icon name='account-circle-outline' size={RFValue(36)} color='#fff' />
+        <Icon name="account-circle-outline" size={RFValue(36)} color="#fff" />
       </TouchableOpacity>
     </View>
   );
