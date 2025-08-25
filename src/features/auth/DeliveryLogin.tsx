@@ -39,7 +39,8 @@ const DeliveryLogin: FC = () => {
         <View style={styles.container}>
           <View style={styles.lottieContainer}>
             <LottieView
-              autoPlay={true}
+              autoPlay
+              loop
               style={styles.lottie}
               source={require('@assets/animations/delivery_man.json')}
               hardwareAccelerationAndroid

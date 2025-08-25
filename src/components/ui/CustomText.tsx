@@ -55,16 +55,16 @@ const CustomText: FC<Props> = ({
       computedFontSize = RFValue(fontSize || 12);
       break;
     case 'h7':
-      computedFontSize = RFValue(fontSize || 10);
-      break;
-    case 'h8':
-      computedFontSize = RFValue(fontSize || 8);
-      break;
-    case 'h9':
       computedFontSize = RFValue(fontSize || 12);
       break;
+    case 'h8':
+      computedFontSize = RFValue(fontSize || 10);
+      break;
+    case 'h9':
+      computedFontSize = RFValue(fontSize || 9);
+      break;
     case 'body':
-      computedFontSize = RFValue(fontSize || 22);
+      computedFontSize = RFValue(fontSize || 12);
       break;
   }
 

@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     color: Colors.text,
     bottom: -1,
   },
-  text: { width: '20%', marginLeft: 10 },
+  text: { width: '10%', marginLeft: 10 },
   icon: {
     width: '5%',
     justifyContent: 'center',

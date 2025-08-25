@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import {
   GestureHandlerRootView,
   PanGestureHandler,
@@ -28,13 +28,13 @@ import Logo from '@assets/images/logo.png';
 import CustomInput from '@components/ui/CustomInput';
 import CustomButton from '@components/ui/CustomButton';
 import { customerLogin } from '@service/authService';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const bottomColors = [...lightColors].reverse();
 
-const CustomerLogin = () => {
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+const CustomerLogin: FC = () => {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [loading, setLoading] = useState(false);
   const [gestureSequence, setGestureSequence] = useState<string[]>([]);
   const animatedValue = useRef(useAnimatedValue(0)).current;
   const keyboardOffsetHeight = useKeyboardOffsetHeight();
@@ -44,13 +44,13 @@ const CustomerLogin = () => {
       const { translationX, translationY } = nativeEvent;
       let direction = '';
       if (Math.abs(translationX) > Math.abs(translationY)) {
-        direction = translationX > 0 ? 'Right' : 'Left';
+        direction = translationX > 0 ? 'right' : 'left';
       } else {
-        direction = translationY > 0 ? 'Down' : 'Up';
+        direction = translationY > 0 ? 'down' : 'up';
       }
       const newSequence = [...gestureSequence, direction].slice(-5);
       setGestureSequence(newSequence);
-      if (newSequence?.join(' ') === 'Up Up Down Left Right') {
+      if (newSequence?.join(' ') === 'up up down left right') {
         setGestureSequence([]);
         resetAndNavigate('DeliveryLogin');
       }
@@ -80,7 +80,7 @@ const CustomerLogin = () => {
     } else {
       Animated.timing(animatedValue, {
         toValue: -keyboardOffsetHeight * 0.84,
-        duration: 1000,
+        duration: 500,
         useNativeDriver: true,
       }).start();
     }
@@ -101,7 +101,7 @@ const CustomerLogin = () => {
               <LinearGradient colors={bottomColors} style={styles.gradient} />
               <View style={styles.content}>
                 <Image source={Logo} style={styles.logo} />
-                <CustomText variant="h1" fontFamily={Fonts.Bold}>
+                <CustomText variant="h2" fontFamily={Fonts.Bold}>
                   India's last minute app
                 </CustomText>
                 <CustomText
@@ -148,7 +148,7 @@ const CustomerLogin = () => {
           style={styles.absoluteSwitch}
           onPress={() => resetAndNavigate('DeliveryLogin')}
         >
-          <Icon name="bicycle" color="000" size={RFValue(18)} />
+          <Icon name="bike-fast" color="000" size={RFValue(18)} />
         </TouchableOpacity>
       </View>
     </GestureHandlerRootView>
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   },
   absoluteSwitch: {
     position: 'absolute',
-    top: Platform.OS === 'ios' ? 50 : 50,
+    top: Platform.OS === 'ios' ? 50 : 20,
     backgroundColor: '#fff',
     shadowColor: '#000',
     shadowOffset: { width: 1, height: 1 },
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   footer: {
-    borderTopWidth: 1,
+    borderTopWidth: 0.8,
     borderColor: Colors.border,
     paddingBottom: 10,
     zIndex: 22,

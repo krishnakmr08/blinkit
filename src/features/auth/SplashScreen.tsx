@@ -26,8 +26,6 @@ const SplashScreen: FC = () => {
   const tokenCheck = async () => {
     const accessToken = tokenStorage.getString('accessToken') as string;
     const refreshToken = tokenStorage.getString('refreshToken') as string;
-    console.log(accessToken);
-    console.log(refreshToken);
     if (accessToken) {
       const decodedAccessToken = jwtDecode<DecodedToken>(accessToken);
       const decodedRefreshToken = jwtDecode<DecodedToken>(refreshToken);
@@ -36,7 +34,7 @@ const SplashScreen: FC = () => {
 
       if (decodedRefreshToken?.exp < currentTime) {
         resetAndNavigate('CustomerLogin');
-        Alert.alert('Session Expired ', 'Please login again');
+        Alert.alert("Session Expired",'Please login again');
         return false;
       }
 

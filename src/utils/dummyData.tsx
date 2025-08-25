@@ -120,7 +120,7 @@ export const categories = [
     },
     {
         id: 2,
-        name: "Pharma & Wellness",
+        name: "Personal Care",
         image: require('../assets/category/2.png')
     },
     {
